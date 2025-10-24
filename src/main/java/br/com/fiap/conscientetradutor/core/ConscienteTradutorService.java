@@ -42,19 +42,27 @@ public class ConscienteTradutorService {
                 - neutralizar_ofensas={suavizar}
                 """;
 
-        String saida = this.chatClient
-                .prompt()
-                .system(s -> s.text(system)
-                        .param("inclusivo", inclusivo)
-                        .param("suavizar", suavizar))
-                .user(textoPt)
-                .call()
-                .content();
+        try {
+            String saida = this.chatClient
+                    .prompt()
+                    .system(s -> s.text(system)
+                            .param("inclusivo", inclusivo)
+                            .param("suavizar", suavizar))
+                    .user(textoPt)
+                    .call()
+                    .content();
 
-        if (saida != null && saida.startsWith("NEGADO:")) {
-            return TraducaoResposta.negada("Conteúdo negado pelas políticas do tradutor.");
+            if (saida != null && saida.startsWith("NEGADO:")) {
+                return TraducaoResposta.negada("Conteúdo negado pelas políticas do tradutor.");
+            }
+            return TraducaoResposta.ok(saida == null ? "" : saida.trim());
+        } catch (Exception e) {
+            String msg = e.getMessage() == null ? "erro desconhecido" : e.getMessage();
+            if (msg.contains("401") || msg.toLowerCase().contains("invalid_api_key")) {
+                return TraducaoResposta.negada("Falha de autenticação no provedor. Verifique a variável OPENAI_API_KEY.");
+            }
+            return TraducaoResposta.negada("Falha ao chamar o provedor: " + msg);
         }
-        return TraducaoResposta.ok(saida == null ? "" : saida.trim());
     }
 
     public record TraducaoResposta(boolean sucesso, String traducao, String motivo) {
