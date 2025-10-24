@@ -1,0 +1,59 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>ConscienteTradutor (PT → ES)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{font-family:system-ui,Arial,sans-serif;margin:2rem;max-width:900px}
+        h1 small{font-weight:400;font-size:.6em;color:#666}
+        textarea{width:100%;min-height:150px}
+        .row{display:flex;gap:1rem;flex-wrap:wrap;margin:.5rem 0}
+        .card{border:1px solid #ddd;border-radius:12px;padding:1rem;margin-top:1rem}
+        .negado{color:#b00020;font-weight:600}
+        .ok{white-space:pre-wrap}
+        .examples code{background:#f6f6f6;padding:.25rem .5rem;border-radius:6px}
+        button{padding:.6rem 1rem;border-radius:10px;border:1px solid #333;background:#111;color:#fff;cursor:pointer}
+        button:hover{opacity:.9}
+    </style>
+</head>
+<body>
+<h1>ConscienteTradutor <small>(Português → Español)</small></h1>
+
+<form th:action="@{/traduzir}" th:object="${req}" method="post" class="card">
+    <label>Texto em Português</label>
+    <textarea th:field="*{textoOriginal}" placeholder="Cole aqui o texto a traduzir..." required></textarea>
+    <div class="row">
+        <label><input type="checkbox" th:field="*{modoInclusivo}"> Modo inclusivo</label>
+        <label><input type="checkbox" th:field="*{neutralizarOfensas}"> Neutralizar ofensas leves</label>
+    </div>
+    <button type="submit">Traduzir</button>
+</form>
+
+<div class="card" th:if="${resp != null}">
+    <div th:if="${resp.sucesso}" class="ok">
+        <h3>Tradução</h3>
+        <p th:text="${resp.traducao}"></p>
+    </div>
+    <div th:if="${!resp.sucesso}" class="negado">
+        <h3>Tradução negada</h3>
+        <p th:text="${resp.motivo}"></p>
+    </div>
+</div>
+
+<div class="card examples">
+    <h3>Exemplos para correção</h3>
+    <ol>
+        <li><strong>Neutro:</strong> <code>Bom dia, preciso de ajuda com minha reserva.</code></li>
+        <li><strong>Formal:</strong> <code>Prezados, solicito a segunda via da fatura.</code></li>
+        <li><strong>Inclusivo:</strong> <code>O estudante deve entregar o trabalho.</code></li>
+        <li><strong>Neutralizar ofensa:</strong> <code>Esse atendente foi um idiota.</code></li>
+        <li><strong>Negado:</strong> texto contendo incitação de ódio ou violência.</li>
+    </ol>
+</div>
+
+<footer style="margin-top:2rem;font-size:.9em;color:#666">
+    Entrega: <strong>30/10 às 10:00</strong> — Grupos de 3 pessoas.
+</footer>
+</body>
+</html>
