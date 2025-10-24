@@ -31,9 +31,12 @@ Windows PowerShell:
 $env:OPENAI_API_KEY="sua-chave-aqui"
 .\mvnw spring-boot:run
 ```
+## Adendo: 
+- os exemplos então dentro da aplicação apos rodar ele está no proprio index.html
 
 ---
 ## Integrantes: 
 - ⭐️ Valéria Conceição Dos Santos — RM: 557177
 - ⭐️ Mirela Pinheiro Silva Rodrigues — RM: 558191
 - ⭐️ Guilherme Romanholi Santos — RM: 557462
+
