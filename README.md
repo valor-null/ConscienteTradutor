@@ -31,6 +31,7 @@ Windows PowerShell:
 $env:OPENAI_API_KEY="sua-chave-aqui"
 .\mvnw spring-boot:run
 ```
+após isso abra o http://localhost:8080/
 ## Adendo: 
 - os exemplos então dentro da aplicação apos rodar ele está no proprio index.html
 
@@ -39,4 +40,5 @@ $env:OPENAI_API_KEY="sua-chave-aqui"
 - ⭐️ Valéria Conceição Dos Santos — RM: 557177
 - ⭐️ Mirela Pinheiro Silva Rodrigues — RM: 558191
 - ⭐️ Guilherme Romanholi Santos — RM: 557462
+
 
